@@ -2,22 +2,22 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"flag"
+	"fmt"
 	"net/http"
 	"os"
 	"strings"
 	"sync"
 
-	"github.com/pborman/uuid"
 	"github.com/hashicorp/memberlist"
+	"github.com/pborman/uuid"
 )
 
 var (
-	mtx sync.RWMutex
-	members = flag.String("members", "", "comma seperated list of members")
-	port = flag.Int("port", 4001, "http port")
-	items = map[string]string{}
+	mtx        sync.RWMutex
+	members    = flag.String("members", "", "comma seperated list of members")
+	port       = flag.Int("port", 4001, "http port")
+	items      = map[string]string{}
 	broadcasts *memberlist.TransmitLimitedQueue
 )
 
@@ -26,11 +26,11 @@ type broadcast struct {
 	notify chan<- struct{}
 }
 
-type delegate struct {}
+type delegate struct{}
 
 type update struct {
 	Action string // add, del
-	Data map[string]string
+	Data   map[string]string
 }
 
 func init() {
@@ -134,7 +134,7 @@ func addHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	broadcasts.QueueBroadcast(&broadcast{
-		msg: append([]byte("d"), b...),
+		msg:    append([]byte("d"), b...),
 		notify: nil,
 	})
 }
@@ -161,7 +161,7 @@ func delHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	broadcasts.QueueBroadcast(&broadcast{
-		msg: append([]byte("d"), b...),
+		msg:    append([]byte("d"), b...),
 		notify: nil,
 	})
 }
