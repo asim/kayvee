@@ -2,30 +2,38 @@
 
 A basic http key/value example of how to use [hashicorp/memberlist](https://github.com/hashicorp/memberlist)
 
-### Install
 ```shell
-$ go get github.com/asim/memberlist
+go get github.com/asim/memberlist
 ```
 
-### Usage
+## Usage
+
 ```shell
-$ memberlist
-Usage of /Users/asim/checkouts/bin/memberlist:
-  -members="": comma seperated list of members
-  -port=4001: http port
+memberlist
+-members="": comma seperated list of members
+-port=4001: http port
 ```
 
 ### Run
+
 Start first node
 ```shell
-$ memberlist
+memberlist
+```
+
+Make a note of the local member address
+```
 Local member 192.168.1.64:60496
 Listening on :4001
 ```
 
-Start second node
+Start second node with first node as part of the member list
 ```shell
-$ memberlist --members=192.168.1.64:60496 --port=4002
+memberlist --members=192.168.1.64:60496 --port=4002
+```
+
+You should see
+```
 2015/10/17 22:13:49 [DEBUG] memberlist: Initiating push/pull sync with: 192.168.1.64:60496
 Local member 192.168.1.64:60499
 Listening on :4002
@@ -41,15 +49,15 @@ First node output
 
 add
 ```shell
-$ curl "http://localhost:4001/add?key=foo&val=bar"
+curl "http://localhost:4001/add?key=foo&val=bar"
 ```
 
 get
 ```shell
-$ curl "http://localhost:4001/get?key=foo"
+curl "http://localhost:4001/get?key=foo"
 ```
 
 del
 ```shell
-$ curl "http://localhost:4001/del?key=foo"
+curl "http://localhost:4001/del?key=foo"
 ```
