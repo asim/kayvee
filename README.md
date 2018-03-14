@@ -2,6 +2,8 @@
 
 A basic http key/value example of how to use [hashicorp/memberlist](https://github.com/hashicorp/memberlist)
 
+## Install
+
 ```shell
 go get github.com/asim/memberlist
 ```
@@ -14,7 +16,7 @@ memberlist
 -port=4001: http port
 ```
 
-### Run
+### Create Cluster
 
 Start first node
 ```shell
@@ -32,32 +34,35 @@ Start second node with first node as part of the member list
 memberlist --members=192.168.1.64:60496 --port=4002
 ```
 
-You should see
+You should see the output
 ```
 2015/10/17 22:13:49 [DEBUG] memberlist: Initiating push/pull sync with: 192.168.1.64:60496
 Local member 192.168.1.64:60499
 Listening on :4002
 ```
 
-First node output
+First node output will log the new connection
 ```shell
 2015/10/17 22:13:49 [DEBUG] memberlist: TCP connection from: 192.168.1.64:60500
 2015/10/17 22:13:52 [DEBUG] memberlist: Initiating push/pull sync with: 192.168.1.64:60499
 ```
 
-### Key Value
+### Key/Value Api
 
-add
+HTTP API
+- /add - add value
+- /get - get value
+- /del - delete value
+
+Query params expected are `key` and `val`
+
 ```shell
+# add
 curl "http://localhost:4001/add?key=foo&val=bar"
-```
 
-get
-```shell
+# get
 curl "http://localhost:4001/get?key=foo"
-```
 
-del
-```shell
+# delete
 curl "http://localhost:4001/del?key=foo"
 ```
