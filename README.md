@@ -47,7 +47,7 @@ First node output will log the new connection
 2015/10/17 22:13:52 [DEBUG] memberlist: Initiating push/pull sync with: 192.168.1.64:60499
 ```
 
-### Key/Value Api
+## Key/Value Api
 
 HTTP API
 - /add - add value
