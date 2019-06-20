@@ -111,6 +111,20 @@ func (d *delegate) MergeRemoteState(buf []byte, join bool) {
 	mtx.Unlock()
 }
 
+type eventDelegate struct{}
+
+func (ed *eventDelegate) NotifyJoin(node *memberlist.Node) {
+	fmt.Println("A node has joined: " + node.String())
+}
+
+func (ed *eventDelegate) NotifyLeave(node *memberlist.Node) {
+	fmt.Println("A node has left: " + node.String())
+}
+
+func (ed *eventDelegate) NotifyUpdate(node *memberlist.Node) {
+	fmt.Println("A node was updated: " + node.String())
+}
+
 func addHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	key := r.Form.Get("key")
@@ -120,7 +134,7 @@ func addHandler(w http.ResponseWriter, r *http.Request) {
 	mtx.Unlock()
 
 	b, err := json.Marshal([]*update{
-		&update{
+		{
 			Action: "add",
 			Data: map[string]string{
 				key: val,
@@ -146,14 +160,12 @@ func delHandler(w http.ResponseWriter, r *http.Request) {
 	delete(items, key)
 	mtx.Unlock()
 
-	b, err := json.Marshal([]*update{
-		&update{
-			Action: "del",
-			Data: map[string]string{
-				key: "",
-			},
+	b, err := json.Marshal([]*update{{
+		Action: "del",
+		Data: map[string]string{
+			key: "",
 		},
-	})
+	}})
 
 	if err != nil {
 		http.Error(w, err.Error(), 500)
@@ -178,6 +190,7 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 func start() error {
 	hostname, _ := os.Hostname()
 	c := memberlist.DefaultLocalConfig()
+	c.Events = &eventDelegate{}
 	c.Delegate = &delegate{}
 	c.BindPort = 0
 	c.Name = hostname + "-" + uuid.NewUUID().String()
