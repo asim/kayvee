@@ -1,6 +1,6 @@
 # KV
 
-A distributed in-memory key-value store built using [hashicorp/memberlist](https://github.com/hashicorp/memberlist)
+A distributed in-memory key-value store built using [hashicorp/memberlist](https://github.com/hashicorp/memberlist) with HTTP API
 
 ## Install
 
