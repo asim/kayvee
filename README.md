@@ -1,17 +1,17 @@
-# Memberlist
+# KV
 
-A basic http key/value example of how to use [hashicorp/memberlist](https://github.com/hashicorp/memberlist)
+A distributed key-value store built using [hashicorp/memberlist](https://github.com/hashicorp/memberlist)
 
 ## Install
 
 ```shell
-go get github.com/asim/memberlist
+go get github.com/asim/kv
 ```
 
 ## Usage
 
 ```shell
-memberlist
+kv
 -members="": comma seperated list of members
 -port=4001: http port
 ```
@@ -20,7 +20,7 @@ memberlist
 
 Start first node
 ```shell
-memberlist
+kv
 ```
 
 Make a note of the local member address
@@ -31,7 +31,7 @@ Listening on :4001
 
 Start second node with first node as part of the member list
 ```shell
-memberlist --members=192.168.1.64:60496 --port=4002
+kv --members=192.168.1.64:60496 --port=4002
 ```
 
 You should see the output
