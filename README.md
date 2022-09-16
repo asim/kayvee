@@ -12,7 +12,7 @@ go get github.com/asim/kv
 
 ```shell
 kv
--members="": comma seperated list of members
+-nodes="": comma seperated list of nodes
 -port=4001: http port
 ```
 
@@ -23,21 +23,21 @@ Start first node
 kv
 ```
 
-Make a note of the local member address
+Make a note of the local node address
 ```
-Local member 192.168.1.64:60496
+Local node 192.168.1.64:60496
 Listening on :4001
 ```
 
-Start second node with first node as part of the member list
+Start second node with first node as part of the nodes list
 ```shell
-kv --members=192.168.1.64:60496 --port=4002
+kv --nodes=192.168.1.64:60496 --port=4002
 ```
 
 You should see the output
 ```
 2015/10/17 22:13:49 [DEBUG] memberlist: Initiating push/pull sync with: 192.168.1.64:60496
-Local member 192.168.1.64:60499
+Local node 192.168.1.64:60499
 Listening on :4002
 ```
 

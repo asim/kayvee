@@ -1,4 +1,4 @@
-module github.com/asim/memberlist
+module github.com/asim/kv
 
 go 1.18
 

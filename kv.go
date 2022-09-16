@@ -15,7 +15,7 @@ import (
 
 var (
 	mtx        sync.RWMutex
-	members    = flag.String("members", "", "comma seperated list of members")
+	nodes    = flag.String("nodes", "", "comma seperated list of nodes")
 	port       = flag.Int("port", 4001, "http port")
 	items      = map[string]string{}
 	broadcasts *memberlist.TransmitLimitedQueue
@@ -198,8 +198,8 @@ func start() error {
 	if err != nil {
 		return err
 	}
-	if len(*members) > 0 {
-		parts := strings.Split(*members, ",")
+	if len(*nodes) > 0 {
+		parts := strings.Split(*nodes, ",")
 		_, err := m.Join(parts)
 		if err != nil {
 			return err
@@ -212,7 +212,7 @@ func start() error {
 		RetransmitMult: 3,
 	}
 	node := m.LocalNode()
-	fmt.Printf("Local member %s:%d\n", node.Addr, node.Port)
+	fmt.Printf("Local node %s:%d\n", node.Addr, node.Port)
 	return nil
 }
 
