@@ -1,9 +1,12 @@
 package main
 
 import (
+	"embed"
 	"encoding/json"
 	"flag"
 	"fmt"
+	"io/fs"
+	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -13,9 +16,12 @@ import (
 	"github.com/pborman/uuid"
 )
 
+//go:embed html/*
+var html embed.FS
+
 var (
 	mtx        sync.RWMutex
-	nodes    = flag.String("nodes", "", "comma seperated list of nodes")
+	nodes      = flag.String("nodes", "", "comma seperated list of nodes")
 	port       = flag.Int("port", 4001, "http port")
 	items      = map[string]string{}
 	broadcasts *memberlist.TransmitLimitedQueue
@@ -217,6 +223,7 @@ func start() error {
 }
 
 func main() {
+	// start the local node
 	if err := start(); err != nil {
 		fmt.Println(err)
 	}
@@ -224,7 +231,18 @@ func main() {
 	http.HandleFunc("/add", addHandler)
 	http.HandleFunc("/del", delHandler)
 	http.HandleFunc("/get", getHandler)
+
+	// extract the embedded html directory
+	htmlContent, err := fs.Sub(html, "html")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// serve the html directory by default
+	http.Handle("/", http.FileServer(http.FS(htmlContent)))
+
 	fmt.Printf("Listening on :%d\n", *port)
+
 	if err := http.ListenAndServe(fmt.Sprintf(":%d", *port), nil); err != nil {
 		fmt.Println(err)
 	}
