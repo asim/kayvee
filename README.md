@@ -49,7 +49,6 @@ First node output will log the new connection
 
 ## HTTP API
 
-- / - form fill
 - /add - add value
 - /get - get value
 - /del - delete value
