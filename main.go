@@ -26,17 +26,6 @@ func init() {
 	flag.Parse()
 }
 
-func addHandler(w http.ResponseWriter, r *http.Request) {
-	r.ParseForm()
-	key := r.Form.Get("key")
-	val := r.Form.Get("val")
-
-	if err := srv.Set(key, val); err != nil {
-		http.Error(w, err.Error(), 500)
-		return
-	}
-}
-
 func delHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	key := r.Form.Get("key")
@@ -57,6 +46,17 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Write([]byte(val.(string)))
+}
+
+func setHandler(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	key := r.Form.Get("key")
+	val := r.Form.Get("val")
+
+	if err := srv.Set(key, val); err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
 }
 
 func main() {
@@ -80,9 +80,9 @@ func main() {
 	log.Printf("Local node %s\n", srv.Address())
 
 	// set http handlers
-	http.HandleFunc("/add", addHandler)
-	http.HandleFunc("/del", delHandler)
 	http.HandleFunc("/get", getHandler)
+	http.HandleFunc("/set", setHandler)
+	http.HandleFunc("/del", delHandler)
 
 	// extract the embedded html directory
 	htmlContent, err := fs.Sub(html, "html")
