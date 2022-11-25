@@ -49,15 +49,15 @@ First node output will log the new connection
 
 ## HTTP API
 
-- /add - add value
-- /get - get value
-- /del - delete value
+- /get - get a value
+- /set - set a value
+- /del - delete a value
 
 Query params expected are `key` and `val`
 
 ```shell
 # add
-curl "http://localhost:4001/add?key=foo&val=bar"
+curl "http://localhost:4001/set?key=foo&val=bar"
 
 # get
 curl "http://localhost:4001/get?key=foo"
