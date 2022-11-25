@@ -13,7 +13,7 @@ go get github.com/asim/kv
 ```shell
 kv
 -nodes="": comma seperated list of nodes
--port=4001: http port
+-address=:4001 http server host:port
 ```
 
 ### Create Cluster
@@ -31,7 +31,7 @@ Listening on :4001
 
 Start second node with first node as part of the nodes list
 ```shell
-kv --nodes=192.168.1.64:60496 --port=4002
+kv --nodes=192.168.1.64:60496 --address=:4002
 ```
 
 You should see the output
