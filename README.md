@@ -49,9 +49,9 @@ First node output will log the new connection
 
 ## HTTP API
 
-- /get - get a value
-- /set - set a value
-- /del - delete a value
+- **/get** - get a value
+- **/set** - set a value
+- **/del** - delete a value
 
 Query params expected are `key` and `val`
 
