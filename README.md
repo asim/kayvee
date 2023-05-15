@@ -65,3 +65,7 @@ curl "http://localhost:4001/get?key=foo"
 # delete
 curl "http://localhost:4001/del?key=foo"
 ```
+
+## HTTP UI
+
+Browse to `localhost:4001` for a simple web form
