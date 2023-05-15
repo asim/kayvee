@@ -1,17 +1,17 @@
-# KV
+# Kayvee
 
 A distributed in-memory key-value store built using [hashicorp/memberlist](https://github.com/hashicorp/memberlist) with HTTP API
 
 ## Install
 
 ```shell
-go get github.com/asim/kv
+go get github.com/asim/kayvee
 ```
 
 ## Usage
 
 ```shell
-kv
+kayvee
 -nodes="": comma seperated list of nodes
 -address=:4001 http server host:port
 ```
@@ -20,7 +20,7 @@ kv
 
 Start first node
 ```shell
-kv
+kayvee
 ```
 
 Make a note of the local node address
@@ -31,7 +31,7 @@ Listening on :4001
 
 Start second node with first node as part of the nodes list
 ```shell
-kv --nodes=192.168.1.64:60496 --address=:4002
+kayvee --nodes=192.168.1.64:60496 --address=:4002
 ```
 
 You should see the output
