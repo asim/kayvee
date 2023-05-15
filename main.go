@@ -8,10 +8,10 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/asim/kv/server"
+	"github.com/asim/kayvee/server"
 )
 
-//go:embed html/*
+//go:embed client/*
 var html embed.FS
 
 var (
@@ -85,7 +85,7 @@ func main() {
 	http.HandleFunc("/del", delHandler)
 
 	// extract the embedded html directory
-	htmlContent, err := fs.Sub(html, "html")
+	htmlContent, err := fs.Sub(html, "client")
 	if err != nil {
 		log.Fatal(err)
 	}
