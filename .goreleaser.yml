@@ -1,14 +1,14 @@
-project_name: kv
+project_name: kayvee
 release:
   github:
     owner: asim
-    name: kv
+    name: kayvee
   name_template: 'Release {{.Tag}}'
 before:
   hooks:
     - go mod download
 builds:
-- binary: kv
+- binary: kayvee
   env:
     - CGO_ENABLED=0
     - GO111MODULE=on
